@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+
+<style>
+    html
+    {
+        margin: 0;
+        background-color: black;
+        max-width: 100%;
+        overflow-x: hidden;
+        font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    }
+
+    body
+    {
+        animation: fadeInAnimation ease 2s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeInAnimation
+    {
+        0%
+        {
+            opacity: 0;
+        }
+        100%
+        {
+            opacity: 1;
+        }
+    }
+
+    /*a top banner for each page*/
+    .topBanner
+    {
+        position: relative;
+        overflow: hidden;
+        background-color: black;
+        color: black;
+        width: 100%;
+        height: 50px;
+    }
+
+    /*without a comma, this CSS will apply to all "anchor" tags inside a div*/
+    .topBanner a
+    {
+        transition: color 0.5s ease;
+        color: #cfcfcf;
+        text-align: center;
+        font-size: 30px;
+        padding: 0px 75px;
+        margin-left: 10%;
+        text-decoration: none;
+        max-width: 100px;
+    }
+
+    .topBanner a:hover
+    {
+        color: white;
+    }
+
+    .text
+    {
+        color: white;
+        font-family: inherit;
+        font-size: 50px;
+        font-style: italic;
+        margin-top: 20%;
+        margin-left: 35%;
+    }
+</style>
+
+
+<html lang="en">
+    <head>
+        <title>About</title>
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+        <main>
+            <div class="topBanner">
+                <a href="index.html">
+                    <!--
+                    <span style="color: #17408B; position: absolute;">N</span>
+                    <span style="color: white; padding-left: 20px; position: absolute;">B</span>
+                    <span style="color: #C9082A; padding-left: 35px; position: absolute;">A</span>
+                    -->
+                    NBA
+                </a>
+                <a href="scores.html">Scores</a>
+                <a href="news.html">News</a>
+                <a href="about.html">About</a>
+            </div>
+
+            <h1 class="text">NBA Scoreboard and News</h1>
+        </main>
+    </body>
+</html>

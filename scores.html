@@ -267,8 +267,6 @@
 
             console.log(json);
 
-            createGameCard(json.events.length);
-
             let gameLinks = new Array(json.events.length);
             for (let i = 0; i < json.events.length; i++)
             {
@@ -281,30 +279,60 @@
 
                 gameLinks[i] = str;
             }
+
+            createGameCard(json.events.length, gameLinks);
             createGameCardScores(json.events.length, gameLinks);
             createTeamNames(json.events.length, gameLinks);
             createTeamLogos(json.events.length);
         }
 
         //create the game cards for each game playing
-        function createGameCard(numGames)
+        function createGameCard(numGames, gameLinks)
         {
             let totalGameCards = new Array(numGames);
             let gameCardMargin = 5;
+            let switchRows = false;
 
             let gamesBackgroundNode = document.querySelector("#gamesBackground");
 
             for (let i = 0; i < totalGameCards.length; i++)
-            {
+            {                
+                let gameCardLink = document.createElement("a");
+                gameCardLink.href = gameLinks[i];
+                gameCardLink.target = "_blank";
+                
+                // gameCardLink.href = "#";
+                // gameCardLink.onclick = clear;
+
                 let str = "gameCard" + String(i + 1);
                 let newGameCard = document.createElement("div");
                 newGameCard.id = str;
                 newGameCard.className = "gameCard";
+
                 newGameCard.style.marginLeft = String(gameCardMargin) + "%";
+                
+                if (i % 3 == 0 && i > 0)
+                {
+                    gameCardMargin = 5;
+                    newGameCard.style.marginLeft = "5%";
 
-                gameCardMargin += 30;
+                    switchRows = true;
+                }
+                else
+                    gameCardMargin += 30;
+                
+                if (i % 6 == 0 && i > 5)
+                    switchRows = false;
+                
+                if (switchRows)
+                {
+                    newGameCard.style.marginLeft = String(gameCardMargin) + "%";
+                    newGameCard.style.marginTop = "25%";
+                }
 
-                gamesBackgroundNode.appendChild(newGameCard);
+                gameCardLink.appendChild(newGameCard);
+
+                gamesBackgroundNode.appendChild(gameCardLink);
             }
             // console.log(gamesBackgroundNode);
         }
@@ -565,5 +593,14 @@
                 gameCardNode.appendChild(team2Img);
             }
         }
+
+        // function clear()
+        // {
+        //     let gamesBackgroundNode = document.querySelector("#gamesBackground");
+        //     // console.log(gamesBackgroundNode);
+
+        //     while (gamesBackgroundNode.firstChild)
+        //         gamesBackgroundNode.removeChild(gamesBackgroundNode.lastChild);
+        // }
     </script>
 </html>

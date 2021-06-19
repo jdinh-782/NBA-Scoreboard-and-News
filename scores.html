@@ -33,12 +33,13 @@
     /*a top banner for each page*/
     .topBanner
     {
-        position: relative;
+        position: absolute;
         overflow: hidden;
         background-color: black;
         color: black;
         width: 100%;
-        height: 50px;
+        height: 75px;
+        margin-left: -0.40%;
     }
 
     /*without a comma, this CSS will apply to all "anchor" tags inside a div*/
@@ -58,6 +59,152 @@
     {
         color: white;
     }
+
+    .scoreboardBackground
+    {
+        background-color: #e3dfde;
+        position: absolute;
+        height: 800px;
+        width: 1700px;
+        justify-content: center;
+        text-align: center;
+        box-shadow: 5px 5px;
+        border: 5px solid #AFAFAF;
+        margin-left: 5%;
+        margin-top: 5%;
+    }
+
+    .calendarBanner
+    {
+        background-color: #F0EDE4;
+        position: absolute;
+        height: 70px;
+        width: 1500px;
+        justify-content: center;
+        text-align: center;
+        margin-top: 2%;
+        margin-left: 5.5%;
+        box-shadow: 2px 5px;
+        border: 3px solid #AFAFAF;
+    }
+
+    .arrow
+    {
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 10px;
+        position: absolute;
+        margin-top: 1.5%;
+    }
+
+    .arrow:hover
+    {
+        transition: border 0.5s ease;
+        border: solid red;
+        border-width: 0 3px 3px 0;
+    }
+
+    .left
+    {
+        margin-left: -40%;
+        transition: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+    }
+
+    .right
+    {
+        margin-left: 38%;
+        transition: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    }
+
+    .gamesBackground
+    {
+        background-color: #F0EDE4;
+        position: absolute;
+        height: 80%;
+        width: 1500px;
+        justify-content: center;
+        text-align: center;
+        margin-top: 7%;
+        margin-left: 5.5%;
+        box-shadow: 2px 5px;
+        border: 3px solid #AFAFAF; 
+    }
+
+    .gameCard
+    {
+        background-color: #e3dfde;
+        position: absolute;
+        height: 30%;
+        width: 25%;
+        box-shadow: inset 0 0 3px black;
+        -moz-box-shadow: inset 0 0 3px black;
+        -webkit-box-shadow: inset 0 0 3px black;
+        /* margin-left: 5%; */
+        margin-top: 5%;
+        border: 1px solid gray;
+    }
+
+    .scoreTextBackground
+    {
+        background-color: white;
+        position: absolute;
+        height: 50px;
+        width: 75px;
+        text-align: center;
+        box-shadow: inset 0 0 3px black;
+        -moz-box-shadow: inset 0 0 3px black;
+        -webkit-box-shadow: inset 0 0 3px black;
+        margin-left: 70%;
+        margin-top: 8%;
+        border: 1px solid gray;
+    }
+
+    .scoreText
+    {
+        font-family: inherit;
+        font-size: 25px;
+        margin-top: 8px;
+        /* text-align: center; */
+        color: black;
+    }
+
+    .teamNameBackground
+    {
+        position: absolute;
+        background-color: white;
+        position: absolute;
+        height: 35px;
+        width: 150px;
+        text-align: center;
+        box-shadow: inset 0 0 3px black;
+        -moz-box-shadow: inset 0 0 3px black;
+        -webkit-box-shadow: inset 0 0 3px black;
+        margin-left: 25%;
+        margin-top: 10%;
+        border: 1px solid gray;
+    }
+
+    .teamNameText
+    {
+        position: absolute;
+        font-family: inherit;
+        font-size: 20px;
+        color: black;
+        margin-left: 10px;
+        margin-top: 3px;
+    }
+
+    .teamLogo
+    {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        margin-left: -45%;
+        margin-top: 7%;
+    }
 </style>
 
 
@@ -70,22 +217,47 @@
     <body>
         <main>
             <div class="topBanner">
-                <a href="index.html">
-                    <!--
-                    <span style="color: #17408B; position: absolute;">N</span>
-                    <span style="color: white; padding-left: 20px; position: absolute;">B</span>
-                    <span style="color: #C9082A; padding-left: 35px; position: absolute;">A</span>
-                    -->
-                    NBA
-                </a>
+                <a href="index.html">NBA</a>
                 <a href="scores.html">Scores</a>
                 <a href="news.html">News</a>
                 <a href="about.html">About</a>
             </div>
+
+            <div class="scoreboardBackground">
+                <div class="calendarBanner">
+                    <a class="arrow left"></a>                    
+                    <a class="arrow right"></a>
+
+                    <p id="calendarDate" style="font-size: 30px; position: absolute; margin-left: 47%; margin-top: 1%;">Day 1</p>
+                </div>
+
+                <div class="gamesBackground" id="gamesBackground">
+                    <a class="arrow right" style="margin-top: 20%; margin-left: 45%;"></a>
+                    <!-- <div id="gameCard" class="gameCard"></div> -->
+                </div>
+            </div>
+            
+            
+            
         </main>
     </body>
 
     <script>
+        getDate();
+        function getDate()
+        {
+            let date = new Date();            
+            date = String(date);
+
+            let calendarDate = date.substring(0, 3);
+            calendarDate += ", ";
+            calendarDate += date.substring(4, 11);
+
+            // console.log(calendarDate);
+            
+            document.getElementById("calendarDate").innerHTML = calendarDate;
+        }
+
         getData();
         async function getData()
         {
@@ -94,6 +266,304 @@
             const json = await response.json();
 
             console.log(json);
+
+            createGameCard(json.events.length);
+
+            let gameLinks = new Array(json.events.length);
+            for (let i = 0; i < json.events.length; i++)
+            {
+                // console.log(json.events[i].links[0].href);
+
+                let url = json.events[i].links[0].href;
+
+                let str = url.substring(0, 4) + "s" + url.substring(4, url.length);
+                // console.log(str);
+
+                gameLinks[i] = str;
+            }
+            createGameCardScores(json.events.length, gameLinks);
+            createTeamNames(json.events.length, gameLinks);
+            createTeamLogos(json.events.length);
+        }
+
+        //create the game cards for each game playing
+        function createGameCard(numGames)
+        {
+            let totalGameCards = new Array(numGames);
+            let gameCardMargin = 5;
+
+            let gamesBackgroundNode = document.querySelector("#gamesBackground");
+
+            for (let i = 0; i < totalGameCards.length; i++)
+            {
+                let str = "gameCard" + String(i + 1);
+                let newGameCard = document.createElement("div");
+                newGameCard.id = str;
+                newGameCard.className = "gameCard";
+                newGameCard.style.marginLeft = String(gameCardMargin) + "%";
+
+                gameCardMargin += 30;
+
+                gamesBackgroundNode.appendChild(newGameCard);
+            }
+            // console.log(gamesBackgroundNode);
+        }
+
+        function createGameCardScores(numGames, gameLinks)
+        {
+            //create scoreText backgrounds
+            for (let i = 0; i < numGames; i++)
+            {
+                let str = "#gameCard" + String(i + 1);
+
+                let gameCardNode = document.querySelector(str);
+
+                let team1Score = document.createElement("div");
+                let team2Score = document.createElement("div");
+
+                //create the score text for both teams on each game
+                let score1 = document.createElement("p");
+                score1.innerHTML = scrapeHTMLContentsToGetScore(gameLinks[i], 1);
+                score1.className = "scoreText";
+
+                team1Score.appendChild(score1);
+
+                let score2 = document.createElement("p");
+                score2.innerHTML = scrapeHTMLContentsToGetScore(gameLinks[i], 2);;
+                score2.className = "scoreText";
+
+                team2Score.appendChild(score2);
+
+                team1Score.className = "scoreTextBackground";
+                team2Score.className = "scoreTextBackground";
+
+                team2Score.style.marginTop = "28%";
+
+                gameCardNode.appendChild(team1Score);
+                gameCardNode.appendChild(team2Score);
+            }
+            // console.log(gameCardNode);
+        }
+
+        //scrape the html contents from the game box score webpage on ESPN to find scores
+        function scrapeHTMLContentsToGetScore(url, teamNum)
+        {            
+            if (window.XMLHttpRequest)
+                xmlhttp = new XMLHttpRequest();
+            else
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+
+            let scoreStr = "";
+
+            xmlhttp.onreadystatechange = function()
+            {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                {
+                    //console.log(xmlhttp.response);
+
+                    //get score of first team
+                    if (teamNum == 1)
+                    {
+                        let index = xmlhttp.response.search("score icon-font-after");
+                        // console.log(index);
+                        
+                        let str = xmlhttp.response.substring(index, index + 45);
+                        // console.log(str);
+                        
+                        for (let i = 0; i < str.length; i++)
+                        {
+                            if (str[i] >= '0' && str[i] <= '9')
+                            {
+                                scoreStr += str[i];
+                                // console.log(str[i]);
+                            }
+                        }
+                        //console.log(scoreStr);
+                    }
+                    
+                    //get score of second team
+                    else if (teamNum == 2)
+                    {
+                        let index = xmlhttp.response.search("score icon-font-before");
+                        // console.log(index);
+                        
+                        let str = xmlhttp.response.substring(index, index + 45);
+                        // console.log(str);
+                        
+                        for (let i = 0; i < str.length; i++)
+                        {
+                            if (str[i] >= '0' && str[i] <= '9')
+                            {
+                                scoreStr += str[i];
+                                // console.log(str[i]);
+                            }
+                        }
+                        //console.log(scoreStr);
+                    }
+                }
+                    
+            }
+            xmlhttp.open("GET", url, false);
+            xmlhttp.send();
+
+            return scoreStr;
+        }
+
+        //create the background and name text for each of the teams (with their respective game card)
+        function createTeamNames(numGames, gameLinks)
+        {
+            for (let i = 0; i < numGames; i++)
+            {
+                let str = "#gameCard" + String(i + 1);
+                let gameCardNode = document.querySelector(str);
+
+                let team1NameBackground = document.createElement("div");
+                team1NameBackground.className = "teamNameBackground";
+
+                let team1NameText = document.createElement("p");
+                team1NameText.className = "teamNameText";
+                team1NameText.innerHTML = scrapeHTMLContentsToGetTeamNames(gameLinks[i], 1);
+
+                team1NameBackground.appendChild(team1NameText);
+
+                gameCardNode.appendChild(team1NameBackground);
+
+
+                let team2NameBackground = document.createElement("div");
+                team2NameBackground.className = "teamNameBackground";
+                team2NameBackground.style.marginTop = "30%";
+
+                let team2NameText = document.createElement("p");
+                team2NameText.className = "teamNameText";
+                team2NameText.innerHTML = scrapeHTMLContentsToGetTeamNames(gameLinks[i], 2);
+
+                team2NameBackground.appendChild(team2NameText);
+
+                gameCardNode.appendChild(team2NameBackground);
+            }
+        }
+
+        //web scraping function to search for just team names
+        function scrapeHTMLContentsToGetTeamNames(url, teamNum)
+        {            
+            if (window.XMLHttpRequest)
+                xmlhttp = new XMLHttpRequest();
+            else
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+
+            let teamNameStr = "";
+
+            xmlhttp.onreadystatechange = function()
+            {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                {
+                    // console.log(xmlhttp.response);
+
+                    // get name of first team
+                    if (teamNum == 1)
+                    {
+                        let index = xmlhttp.response.search("Attribute name=\"title\"");
+                        // console.log(index);
+                                                
+                        let str = xmlhttp.response.substring(index + 23, index + 100);
+                        // console.log(str);
+
+                        for (let i = 0; i < str.length; i++)
+                        {
+                            if (str[i] == ' ')
+                                break;
+                            else
+                                teamNameStr += str[i];
+                            // console.log(str[i]);
+                        }
+                    }
+
+                    else if (teamNum == 2)
+                    {
+                        let index = xmlhttp.response.search("Attribute name=\"title\"");
+                        // console.log(index);
+                                                
+                        let str = xmlhttp.response.substring(index + 23, index + 100);
+                        // console.log(str);
+
+                        let secondIndex = str.search('vs. ');
+                        // console.log(secondIndex);
+
+                        str = str.substring(secondIndex + 4, secondIndex + 77);
+                        // console.log(str);
+
+                        for (let i = 0; i < str.length; i++)
+                        {
+                            if (str[i] == ' ')
+                                break;
+                            else
+                                teamNameStr += str[i];
+                        }
+                    }
+                } 
+            }
+            xmlhttp.open("GET", url, false);
+            xmlhttp.send();
+
+            return teamNameStr;
+        }
+
+        //create img elements for the team logos
+        function createTeamLogos(numGames)
+        {
+            for (let i = 0; i < numGames; i++)
+            {
+                let str = "#gameCard" + String(i + 1);
+                let gameCardNode = document.querySelector(str);
+
+                let teamName = String(gameCardNode.children[2].innerHTML);
+                // console.log(teamName);
+
+                teamName = teamName.substring(24, teamName.length);
+                // console.log(teamName);
+
+                let team1Name = "";
+                for (let j = 0; j < teamName.length; j++)
+                {
+                    if (teamName[j] == "<")
+                        break;
+                    else
+                        team1Name += teamName[j];
+                }
+                team1Name = "team logos/" + team1Name + ".png";
+                // console.log(team1Name);
+
+                let team1Img = document.createElement("img");
+                team1Img.src = team1Name;
+                team1Img.className = "teamLogo";
+
+                gameCardNode.appendChild(team1Img);
+
+                
+                teamName = String(gameCardNode.children[3].innerHTML);
+                // console.log(teamName);
+
+                teamName = teamName.substring(24, teamName.length);
+                // console.log(teamName);
+
+                let team2Name = "";
+                for (let j = 0; j < teamName.length; j++)
+                {
+                    if (teamName[j] == "<")
+                        break;
+                    else
+                        team2Name += teamName[j];
+                }
+                team2Name = "team logos/" + team2Name + ".png";
+                // console.log(team2Name);
+
+                let team2Img = document.createElement("img");
+                team2Img.src = team2Name;
+                team2Img.className = "teamLogo";
+                team2Img.style.marginTop = "28%";
+
+                gameCardNode.appendChild(team2Img);
+            }
         }
     </script>
 </html>
